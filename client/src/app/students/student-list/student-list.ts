@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { phoneTypeLabels, Student } from '../student.model';
 import { StudentService } from '../student.service';
 
 @Component({
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink],
   selector: 'app-student-list',
   styleUrl: './student-list.css',
   templateUrl: './student-list.html',

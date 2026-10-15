@@ -17,6 +17,22 @@ export interface Student {
   phones: Phone[];
 }
 
+// מה שנשלח לשרת ב-POST/PUT (מתאים ל-StudentSaveDto)
+export interface PhoneSave {
+  id: number | null; // null = טלפון חדש
+  number: string;
+  type: PhoneType;
+}
+
+export interface StudentSave {
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  phones: PhoneSave[];
+}
+
+export const phoneTypes: PhoneType[] = ['Mobile', 'Home', 'Mother', 'Father'];
+
 // תוויות בעברית לסוגי הטלפון (בדומה ל-Dictionary<PhoneType, string>)
 export const phoneTypeLabels: Record<PhoneType, string> = {
   Mobile: 'נייד',

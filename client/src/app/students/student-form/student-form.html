@@ -1,0 +1,75 @@
+<h2>{{ isEdit() ? 'עריכת תלמיד' : 'הוספת תלמיד' }}</h2>
+
+@if (loading()) {
+  <p>טוען...</p>
+} @else {
+  <!-- [formGroup] מחבר את ה-<form> לאובייקט form בקוד; (ngSubmit) = אירוע שליחה -->
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+    <div class="row">
+      <label class="field">
+        <span>שם פרטי</span>
+        <input formControlName="firstName" />
+        @if (errorFor('firstName'); as error) {
+          <small class="field-error">{{ error }}</small>
+        }
+      </label>
+
+      <label class="field">
+        <span>שם משפחה</span>
+        <input formControlName="lastName" />
+        @if (errorFor('lastName'); as error) {
+          <small class="field-error">{{ error }}</small>
+        }
+      </label>
+
+      <label class="field">
+        <span>תאריך לידה</span>
+        <input type="date" formControlName="birthDate" />
+        @if (errorFor('birthDate'); as error) {
+          <small class="field-error">{{ error }}</small>
+        }
+      </label>
+    </div>
+
+    <fieldset>
+      <legend>טלפונים</legend>
+
+      <!-- formArrayName: רשימה דינמית של קבוצות שדות (בדומה ל-ItemsControl עם TextBox-ים) -->
+      <div formArrayName="phones">
+        @for (phone of phones.controls; track phone; let i = $index) {
+          <div class="phone-row" [formGroupName]="i">
+            <select formControlName="type">
+              @for (type of phoneTypes; track type) {
+                <option [value]="type">{{ phoneTypeLabels[type] }}</option>
+              }
+            </select>
+
+            <div class="phone-number">
+              <input formControlName="number" dir="ltr" placeholder="050-1234567" />
+              @if (errorFor('phones.' + i + '.number'); as error) {
+                <small class="field-error">{{ error }}</small>
+              }
+            </div>
+
+            <button type="button" class="btn btn-link" (click)="removePhone(i)">הסרה</button>
+          </div>
+        } @empty {
+          <p class="muted">אין טלפונים</p>
+        }
+      </div>
+
+      <button type="button" class="btn" (click)="addPhone()">+ הוספת טלפון</button>
+    </fieldset>
+
+    @if (generalError(); as error) {
+      <p class="error">{{ error }}</p>
+    }
+
+    <div class="actions">
+      <button type="submit" class="btn btn-primary" [disabled]="saving()">
+        {{ saving() ? 'שומר...' : 'שמירה' }}
+      </button>
+      <a routerLink="/students" class="btn">ביטול</a>
+    </div>
+  </form>
+}

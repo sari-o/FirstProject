@@ -1,4 +1,8 @@
-<h2>רשימת תלמידים</h2>
+<div class="toolbar">
+  <h2>רשימת תלמידים</h2>
+  <!-- routerLink: ניווט בלי טעינה מחדש של הדף -->
+  <a routerLink="/students/new" class="btn btn-primary">+ הוספת תלמיד</a>
+</div>
 
 @if (loading()) {
   <p>טוען...</p>
@@ -12,6 +16,7 @@
         <th>שם משפחה</th>
         <th>תאריך לידה</th>
         <th>טלפונים</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -32,10 +37,14 @@
               <span class="muted">אין טלפונים</span>
             }
           </td>
+          <td class="actions">
+            <!-- מערך במקום מחרוזת: Angular בונה את הכתובת /students/2/edit -->
+            <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-link">עריכה</a>
+          </td>
         </tr>
       } @empty {
         <tr>
-          <td colspan="4" class="muted">אין תלמידים להצגה</td>
+          <td colspan="5" class="muted">אין תלמידים להצגה</td>
         </tr>
       }
     </tbody>
