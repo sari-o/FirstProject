@@ -5,6 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            // דיבאג של ה-API (C# Dev Kit): בונה, מריץ עם פרופיל http מ-launchSettings.json ומחבר debugger
+            "name": "API (C#)",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/api/StudentsApi.csproj",
+            "launchConfigurationId": "TargetFramework=;http"
+        },
+        {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
