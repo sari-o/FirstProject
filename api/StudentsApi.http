@@ -1,0 +1,16 @@
+@StudentsApi_HostAddress = http://localhost:5276
+
+### כל התלמידים
+GET {{StudentsApi_HostAddress}}/api/students
+Accept: application/json
+
+### תלמיד לפי מזהה
+GET {{StudentsApi_HostAddress}}/api/students/2
+Accept: application/json
+
+### תלמיד שלא קיים - מצפים ל-404
+GET {{StudentsApi_HostAddress}}/api/students/99
+Accept: application/json
+
+### מסמך OpenAPI (תיאור ה-API, בדומה ל-WSDL)
+GET {{StudentsApi_HostAddress}}/openapi/v1.json
