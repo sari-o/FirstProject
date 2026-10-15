@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using StudentsApi.Data;
 
@@ -5,7 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    // enum ב-JSON כטקסט ("Mother") ולא כמספר (2)
+    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 // DbContext נרשם כ-Scoped: מופע אחד לכל בקשת HTTP
 builder.Services.AddDbContext<AppDbContext>(options =>

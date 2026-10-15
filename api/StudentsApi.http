@@ -4,5 +4,62 @@
 GET {{StudentsApi_HostAddress}}/api/students
 Accept: application/json
 
+### חיפוש לפי שם
+GET {{StudentsApi_HostAddress}}/api/students?search=כהן
+
+### חיפוש לפי חלק ממספר טלפון
+GET {{StudentsApi_HostAddress}}/api/students?search=052
+
+### תלמיד לפי מזהה
+GET {{StudentsApi_HostAddress}}/api/students/2
+
+### תלמיד שלא קיים - מצפים ל-404
+GET {{StudentsApi_HostAddress}}/api/students/99
+
+### הוספת תלמיד - מצפים ל-201
+# @name create
+POST {{StudentsApi_HostAddress}}/api/students
+Content-Type: application/json
+
+{
+  "firstName": "יונתן",
+  "lastName": "אברהם",
+  "birthDate": "2012-01-30",
+  "phones": [
+    { "number": "050-9998877", "type": "Mother" },
+    { "number": "02-5554433", "type": "Home" }
+  ]
+}
+
+### עדכון התלמיד שנוצר: שינוי שם, עדכון טלפון אחד, מחיקת השני, הוספת חדש
+# (משתמש ב-Id-ים מהתשובה של create - יש להריץ את create קודם)
+PUT {{StudentsApi_HostAddress}}/api/students/{{create.response.body.$.id}}
+Content-Type: application/json
+
+{
+  "firstName": "יונתן",
+  "lastName": "אברהמי",
+  "birthDate": "2012-01-30",
+  "phones": [
+    { "id": {{create.response.body.$.phones[0].id}}, "number": "050-1110000", "type": "Mother" },
+    { "number": "053-2223344", "type": "Father" }
+  ]
+}
+
+### מחיקת התלמיד שנוצר - מצפים ל-204
+DELETE {{StudentsApi_HostAddress}}/api/students/{{create.response.body.$.id}}
+
+### ולידציה - מצפים ל-400 עם הודעות שגיאה בעברית
+POST {{StudentsApi_HostAddress}}/api/students
+Content-Type: application/json
+
+{
+  "firstName": "",
+  "lastName": "שם משפחה ארוך מדי שם משפחה ארוך מדי שם משפחה ארוך מדי",
+  "phones": [
+    { "number": "abc", "type": "Mother" }
+  ]
+}
+
 ### מסמך OpenAPI (תיאור ה-API, בדומה ל-WSDL)
 GET {{StudentsApi_HostAddress}}/openapi/v1.json
