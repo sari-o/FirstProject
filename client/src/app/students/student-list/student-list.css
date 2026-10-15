@@ -1,0 +1,38 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border: 1px solid var(--color-border);
+}
+
+th,
+td {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--color-border);
+  text-align: start; /* start = ימין ב-RTL, שמאל ב-LTR */
+  vertical-align: top;
+}
+
+th {
+  background: #e9eef5;
+}
+
+tbody tr:hover {
+  background: #f7f9fc;
+}
+
+.phone-type {
+  color: #5a6573;
+  margin-inline-end: 0.25rem;
+}
+
+.muted {
+  color: #7a8594;
+}
+
+.error {
+  color: #b42318;
+  background: #fdecea;
+  padding: 0.75rem;
+  border-radius: 4px;
+}
