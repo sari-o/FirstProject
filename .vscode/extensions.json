@@ -1,0 +1,8 @@
+{
+  // תוספים מומלצים לפרויקט - VS Code מציע להתקין אותם כשפותחים את התיקייה
+  "recommendations": [
+    "ms-dotnettools.csdevkit",
+    "humao.rest-client",
+    "angular.ng-template"
+  ]
+}

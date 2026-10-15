@@ -1,0 +1,19 @@
+/* סגנונות גלובליים - חלים על כל האפליקציה (בדומה ל-Resources ב-App.xaml) */
+
+:root {
+  --color-primary: #1f5fa8;
+  --color-bg: #f4f6f9;
+  --color-text: #1d2530;
+  --color-border: #d5dbe3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
