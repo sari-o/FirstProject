@@ -1,30 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using StudentsApi.Data;
 
 namespace StudentsApi.Controllers;
 
-// זמני לשלב 1: נתונים קבועים בזיכרון. בשלב 2 יוחלף ב-EF Core.
-public record StudentSample(int Id, string FirstName, string LastName, DateOnly BirthDate);
-
 [ApiController]
 [Route("api/[controller]")] // [controller] = שם המחלקה בלי "Controller" -> api/students
-public class StudentsController : ControllerBase
+public class StudentsController(AppDbContext db) : ControllerBase // DI מזריק את ה-DbContext בבנאי
 {
-    private static readonly List<StudentSample> Students =
-    [
-        new(1, "נועה", "כהן", new DateOnly(2012, 3, 14)),
-        new(2, "איתי", "לוי", new DateOnly(2011, 11, 2)),
-        new(3, "מאיה", "מזרחי", new DateOnly(2012, 7, 25)),
-    ];
-
     // GET api/students
+    // זמני לשלב 2: projection לאובייקט אנונימי. בשלב 3 יוחלף ב-DTO מסודר.
     [HttpGet]
-    public IEnumerable<StudentSample> GetAll() => Students;
-
-    // GET api/students/2
-    [HttpGet("{id:int}")]
-    public ActionResult<StudentSample> GetById(int id)
+    public async Task<IActionResult> GetAll()
     {
-        var student = Students.FirstOrDefault(s => s.Id == id);
-        return student is null ? NotFound() : student;
+        var students = await db.Students
+            .OrderBy(s => s.LastName)
+            .Select(s => new
+            {
+                s.Id,
+                s.FirstName,
+                s.LastName,
+                s.BirthDate,
+                Phones = s.Phones.Select(p => new { p.Number, Type = p.Type.ToString() })
+            })
+            .ToListAsync();
+
+        return Ok(students);
     }
 }
