@@ -1,0 +1,12 @@
+<!-- #dialog = שם לאלמנט, כדי ש-viewChild ימצא אותו; (cancel) = לחיצה על Esc -->
+<dialog #dialog (cancel)="onCancel($event)">
+  <h3>{{ title() }}</h3>
+  <p>{{ message() }}</p>
+
+  <div class="actions">
+    <button type="button" class="btn btn-danger" [disabled]="busy()" (click)="confirmed.emit()">
+      {{ busy() ? 'מבצע...' : confirmText() }}
+    </button>
+    <button type="button" class="btn" [disabled]="busy()" (click)="cancelled.emit()">ביטול</button>
+  </div>
+</dialog>

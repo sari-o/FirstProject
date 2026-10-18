@@ -9,6 +9,10 @@
   white-space: nowrap;
 }
 
+.danger {
+  color: #b42318;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

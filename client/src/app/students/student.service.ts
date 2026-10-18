@@ -28,4 +28,8 @@ export class StudentService {
   update(id: number, student: StudentSave): Observable<Student> {
     return this.http.put<Student>(`${this.baseUrl}/${id}`, student);
   }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
 }

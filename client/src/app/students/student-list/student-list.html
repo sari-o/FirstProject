@@ -9,6 +9,10 @@
 } @else if (error()) {
   <p class="error">{{ error() }}</p>
 } @else {
+  @if (deleteError(); as message) {
+    <p class="error">{{ message }}</p>
+  }
+
   <table>
     <thead>
       <tr>
@@ -40,6 +44,7 @@
           <td class="actions">
             <!-- מערך במקום מחרוזת: Angular בונה את הכתובת /students/2/edit -->
             <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-link">עריכה</a>
+            <button type="button" class="btn btn-link danger" (click)="askDelete(student)">מחיקה</button>
           </td>
         </tr>
       } @empty {
@@ -51,4 +56,17 @@
   </table>
 
   <p class="muted">סה"כ {{ students().length }} תלמידים</p>
+}
+
+<!-- החלון קיים ב-DOM רק כשיש תלמיד שממתין למחיקה -->
+<!-- [prop]="..." מעביר ערך ל-input; (event)="..." מאזין ל-output -->
+@if (studentToDelete(); as student) {
+  <app-confirm-dialog
+    title="מחיקת תלמיד"
+    [message]="'למחוק את ' + student.firstName + ' ' + student.lastName + '? לא ניתן לבטל פעולה זו.'"
+    confirmText="מחיקה"
+    [busy]="deleting()"
+    (confirmed)="confirmDelete()"
+    (cancelled)="cancelDelete()"
+  />
 }

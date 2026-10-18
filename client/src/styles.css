@@ -45,6 +45,16 @@ body {
   background: #194d89;
 }
 
+.btn-danger {
+  background: #b42318;
+  border-color: #b42318;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #912018;
+}
+
 .btn:disabled {
   opacity: 0.6;
   cursor: default;
