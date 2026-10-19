@@ -36,6 +36,7 @@
         <th>שם פרטי</th>
         <th>שם משפחה</th>
         <th>תאריך לידה</th>
+        <th>גיל</th>
         <th>טלפונים</th>
         <th></th>
       </tr>
@@ -47,7 +48,10 @@
           <td>{{ student.firstName }}</td>
           <td>{{ student.lastName }}</td>
           <!-- pipe "|" מקביל ל-IValueConverter -->
-          <td>{{ student.birthDate | date: 'dd/MM/yyyy' }}</td>
+          <!-- title = tooltip עם תאריך מלא בעברית (LOCALE_ID = 'he'): "יום רביעי, 14 במרץ 2012" -->
+          <td [title]="student.birthDate | date: 'fullDate'">{{ student.birthDate | date: 'dd/MM/yyyy' }}</td>
+          <!-- pipe שכתבנו בעצמנו: shared/age.pipe.ts -->
+          <td>{{ student.birthDate | age }}</td>
           <td>
             @for (phone of student.phones; track phone.id) {
               <div class="phone">
@@ -66,7 +70,7 @@
         </tr>
       } @empty {
         <tr>
-          <td colspan="5" class="muted">
+          <td colspan="6" class="muted">
             @if (searchedText()) {
               לא נמצאו תלמידים התואמים ל-"{{ searchedText() }}"
             } @else {
@@ -79,7 +83,7 @@
   </table>
 
   <p class="muted">
-    סה"כ {{ students().length }} תלמידים
+    {{ students().length | i18nPlural: studentCountText }}
     @if (searchedText()) {
       (מסונן)
     }
