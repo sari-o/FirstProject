@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Student, StudentSave } from './student.model';
@@ -13,8 +13,10 @@ export class StudentService {
   private readonly baseUrl = '/api/students';
 
   // מחזיר Observable: הבקשה לא נשלחת עד שמישהו עושה subscribe
-  getAll(): Observable<Student[]> {
-    return this.http.get<Student[]>(this.baseUrl);
+  // search ריק = כל התלמידים; אחרת: /api/students?search=...
+  getAll(search = ''): Observable<Student[]> {
+    const params = search ? new HttpParams().set('search', search) : undefined;
+    return this.http.get<Student[]>(this.baseUrl, { params });
   }
 
   getById(id: number): Observable<Student> {

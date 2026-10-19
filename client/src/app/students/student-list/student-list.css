@@ -4,6 +4,22 @@
   justify-content: space-between;
 }
 
+.search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.search input {
+  font: inherit;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  width: 340px;
+  max-width: 100%;
+}
+
 .actions {
   text-align: end;
   white-space: nowrap;

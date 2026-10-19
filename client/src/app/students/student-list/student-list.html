@@ -4,6 +4,23 @@
   <a routerLink="/students/new" class="btn btn-primary">+ הוספת תלמיד</a>
 </div>
 
+<div class="search">
+  <!-- #box = הפניה לאלמנט; בכל הקשה מעדכנים את ה-signal (בדומה ל-UpdateSourceTrigger=PropertyChanged) -->
+  <input
+    #box
+    type="search"
+    placeholder="חיפוש לפי שם, שם משפחה או טלפון..."
+    [value]="searchText()"
+    (input)="searchText.set(box.value)"
+  />
+  @if (searchText()) {
+    <button type="button" class="btn btn-link" (click)="clearSearch()">ניקוי</button>
+  }
+  @if (searching() && !loading()) {
+    <span class="muted">מחפש...</span>
+  }
+</div>
+
 @if (loading()) {
   <p>טוען...</p>
 } @else if (error()) {
@@ -49,13 +66,24 @@
         </tr>
       } @empty {
         <tr>
-          <td colspan="5" class="muted">אין תלמידים להצגה</td>
+          <td colspan="5" class="muted">
+            @if (searchedText()) {
+              לא נמצאו תלמידים התואמים ל-"{{ searchedText() }}"
+            } @else {
+              אין תלמידים להצגה
+            }
+          </td>
         </tr>
       }
     </tbody>
   </table>
 
-  <p class="muted">סה"כ {{ students().length }} תלמידים</p>
+  <p class="muted">
+    סה"כ {{ students().length }} תלמידים
+    @if (searchedText()) {
+      (מסונן)
+    }
+  </p>
 }
 
 <!-- החלון קיים ב-DOM רק כשיש תלמיד שממתין למחיקה -->
